@@ -1,0 +1,80 @@
+{% extends 'dreamapp/header.html' %}
+{% block content %}
+
+<head>
+    {% load static %}
+    {{ form.media }}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5864886611650170"
+        crossorigin="anonymous"></script>
+</head>
+
+<body style="margin-bottom:10em;">
+    <div class="container" style="margin-top:10em">
+        <div class="container">
+            <div class="container center">
+                <h4 class="exo-200h">
+                    [ Have Your Dream Analyzed ]
+                </h4>
+            </div>
+            <form class="container" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="input-field col s6 exo-200">
+                        <input id="email" name="email" type="email" class="validate exo-200">
+                        <label for="email">Email*</label>
+                    </div>
+                    <div class="input-field col s6 exo-200">
+                        <input id="name" name="name" type="text" class="validate exo-200">
+                        <label for="name">Name*</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 exo-200">
+                        <input id="phone" name="phone" type="tel" class="validate exo-200"
+                            pattern="^\+[0-9]{1,4}[0-9]+$"
+                            onkeypress="return event.charCode >= 43 && event.charCode <= 57">
+                        <label for="phone">WhatsApp# (optional) +XXXXXXXXXX</label>
+                        <span class="helper-text"
+                            data-error="Invalid phone number format. Please enter a valid phone number in WhatsApp format starting with the '+' symbol followed by the area code (do not inlcude spaces, or special characters)"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 exo-200">
+                        <input id="title" name="title" type="text" class="validate exo-200">
+                        <label for="title">Dream Name*</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 exo-200">
+                        <textarea id="textarea1" name="dream" class="validate materialize-textarea exo-200"></textarea>
+                        <label for="textarea1">Dream*</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6 exo-200">
+                        <label>
+                            <input type="checkbox" name="active" />
+                            <span class="exo-200">Share dream publicly*</span>
+                        </label>
+                    </div>
+                    <div class="input-field col s6 exo-200">
+                        <select name="mbti_type" id="mbti_type" style="color:white;">
+                            <option value="" style="font-size: 11px;">Select Your Personality Type*</option>
+                            {% for mbti_choice in mbti_choices %}
+                            <option value="{{ mbti_choice.0 }}" style="color:white;">{{ mbti_choice.1 }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="mbti_type">Personality Type*</label>
+                    </div>
+                </div>
+                <button class="btn btn-small center hoverable exo-200" type="submit"
+                    style="width:100%;margin-top:0.5rem">
+                    [ <b class="center">SUBMIT</b> ]
+                </button>
+            </form>
+        </div>
+    </div>
+
+    
+</body>
+{% endblock %}

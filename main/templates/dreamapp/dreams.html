@@ -1,0 +1,111 @@
+{% extends 'dreamapp/header.html' %}
+{% block content %}
+
+<head>
+  {% load static %}
+  {{ form.media }}
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5864886611650170"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container center" style="margin-top:5em">
+    <div class="container center">
+      <a class="material-symbols-outlined center"
+        style="font-size: 300px;animation: prism-animation 43s cubic-bezier(0.19, 1, 0.22, 1) infinite;">square</a>
+      <h5 class="goldman-regular center">DREAM ANALYSIS</h5>
+      <div class="">
+        <p class="exo-200t center">
+          In analytical psychology, dream analysis is a tool for delving into the hidden parts of the mind and
+          discovering symbols and patterns that have personal and universal meanings. Unlike Freudian analysis that
+          mainly focuses on hidden desires, in analytical psychology, dreams are seen as expressions of the journey
+          toward self-discovery and achieving one's potential. <strong>Carl Jung</strong> stressed the importance of deciphering the
+          symbolic language of dreams to tap into deeper layers of the mind and bring unconscious thoughts to light.
+          Analyzing dreams involves examining recurring symbols, characters, and themes, linking them to personal
+          experiences and broader human themes. This process helps individuals understand their psychological growth,
+          tackle unresolved issues, and develop greater self-awareness and completeness.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="margin-top: 5em;margin-bottom: 5em;">
+    <h5 class="goldman-regular center">[ DREAM FORUM ]</h5>
+    <div class="container" style="border-top: 1px solid rgba(160, 160, 160, 0.2);">
+      <div class="exo-200" id="dreams-container">
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top: 5em; margin-bottom: 5em;">
+    {% for item in dreams_with_replies %}
+    <div class="container">
+      <div class="card horizontal">
+        <div class="card-stacked">
+          <div class="card-content">
+            <span class="card-title exo-200">{{ item.dream.title }}</span>
+            <p class="exo-200"><strong>Name:</strong> {{ item.dream.name }}</p>
+            <p class="exo-200"><strong>MBTI Type:</strong> {{ item.dream.mbti_type }}</p>
+            <p class="exo-200"><strong>Dream:</strong> {{ item.dream.dream }}</p>
+            <p class="exo-200d">{{ item.dream.pub }}</p>
+            <div class="" style="border-top: 1px solid rgba(160, 160, 160, 0.2);margin:1em 0 1em 0"></div>
+            <p class="exo-200"><strong>Replies:</strong></p>
+            {% for reply in item.replies %}
+                <p class="exo-200" style="padding:1em"><strong>{{ reply.name }}</strong>: {{ reply.reply }}</p>
+            {% empty %}
+                <p class="exo-200">No replies yet.</p>
+            {% endfor %}
+            {% if request.user.is_authenticated %}
+            <form method="POST" action="">
+              {% csrf_token %}
+              <input type="hidden" name="dream_id" value="{{ item.dream.id }}">
+              <div class="row">
+                <div class="input-field col s12 exo-200">
+                    <textarea id="textarea1" name="reply" class="validate materialize-textarea exo-200"></textarea>
+                    <label for="textarea1">Reply*</label>
+                </div>
+              </div>
+              <button class="btn btn-small center hoverable exo-200" type="submit" style="width:100%;margin-top:0.5rem">
+                  [ <b class="center">SUBMIT</b> ]
+              </button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+<!--
+  <script>
+    var all_json_data = {{all_json_data | safe}};
+
+    var dreamsContainer = document.getElementById("dreams-container");
+
+    // Iterate over all_json_data to create card divs for each dream
+    all_json_data.forEach(function (dream) {
+      // Create a new card div
+      var cardDiv = document.createElement("div");
+      cardDiv.classList.add("card");
+
+      // Create card content
+      var cardContentDiv = document.createElement("div");
+      cardContentDiv.classList.add("card-content");
+
+      // Add dream data to the card content
+      cardContentDiv.innerHTML = `
+          <span class="card-title">${dream.title}</span>
+          <p><strong>Name:</strong> ${dream.name}</p>
+          <p><strong>MBTI Type:</strong> ${dream.mbti_type}</p>
+          <p><strong>Dream:</strong> ${dream.dream}</p>
+      `;
+
+      // Append card content to the card div
+      cardDiv.appendChild(cardContentDiv);
+
+      // Append the card div to the dreams container
+      dreamsContainer.appendChild(cardDiv);
+    });
+  </script>
+-->
+</body>
+{% endblock %}

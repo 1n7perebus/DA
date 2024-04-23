@@ -1,0 +1,56 @@
+<head>
+  {% load static %}
+  <link href="{% static 'main/css/materialize.min.css' %}" rel="stylesheet">
+  <link href="{% static 'main/js/materialize.js' %}" rel="stylesheet">
+  <script src="{% static 'main/js/materialize.js' %}"></script>
+  <script src="{% static 'main/js/materialize.min.js' %}"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  {{ form.media }}
+</head>
+
+<nav class="nav-extended" style="box-shadow:none">
+  <div class="nav-wrapper">
+    <div class="brand-logo-wrapper center">
+    <a href="/" class="brand-logo center goldman-regular" style="text-shadow: 0px 0 3px #ffffff;letter-spacing: 34px;">DREAM
+      <a href="/" class="brand-logo center exo-200" style="font-size:21px;margin-top:2em;letter-spacing: 26px;text-shadow: 0px 0 3px #ffffff;">ANALYTICA</a></a>
+    </div>
+    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <ul class="left hide-on-med-and-down">
+      <li><a class="goldman-regular highlight-blue" href="/">Home</a></li>
+      <li><a class="goldman-regular highlight-blue" href="/dreams">Dreams</a></li>
+      <!--
+      <li><a class="goldman-regular highlight-blue" href="/analyticalPsychology.html">Analytical Psychology</a></li>
+      <li ><a class="goldman-regular highlight-blue" href="/individuation.html">Individuation</a></li>
+      -->
+    </ul>
+  </div>
+</nav>
+
+<ul class="sidenav" id="mobile-demo" style="margin-top:1em">
+  <li><a class="goldman-regular highlight-blue" href=/">Home</a></li>
+  <li><a class="goldman-regular highlight-blue" href="/dreams">Dreams</a></li>
+  <!--
+  <li><a class="goldman-regular" href="/analyticalPsychology.html">Analytical Psychology</a></li>
+  <li class="goldman-regular"><a href="/individuation.html">Individuation</a></li>
+  -->
+</ul>
+
+<body style="margin-bottom:10em;background:#211f21;">
+  {% block content %}
+  {% endblock %}
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      M.AutoInit();
+    });
+</script>
+</body>
