@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "erebus0013.pythonanywhere.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "erebus0013.pythonanywhere.com", "www.dreamanalytica.com", "dreamanalytica.com", "http://www.dreamanalytica.com/", "dreamanalytica.com/"]
 
 
 # Application definition

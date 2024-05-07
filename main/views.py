@@ -1,20 +1,23 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
 from django.shortcuts import get_object_or_404, render
-from django.http import Http404, HttpResponse
-from django.http import HttpResponseForbidden, HttpResponseRedirect
-from django.conf import settings
+from django.http import HttpResponseRedirect
 
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-
+from datetime import timedelta
 from django.utils import timezone
+from django.contrib import messages
 
 from django.db.models import *
 from .forms import *
 from .models import *
+
+# Checklist
+# Add Sections
+# Advertising Goodgle Adsense 
+# Payment Mothod
+# Adjust Submission Time
 
 def index(request):
     dreams = Dreams.objects.all()
@@ -23,21 +26,27 @@ def index(request):
         
     if request.method == "POST":
         ip_address = request.META.get('REMOTE_ADDR')
-        print("IP Address:", ip_address)  
-        # CHANGE THIS BEFORE DEPLOYMENT
-        recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timezone.timedelta(seconds=1)).exists()
-        #recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timezone.timedelta(days=1)).exists()
-        print("Recent Submission:", recent_submission)  
-        dream_form = DreamForm(request.POST)
+        #recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(days=1)).exists()
+
+        recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(seconds=1)).exists()
         
+        if recent_submission:
+            # Calculate the remaining wait time before resubmitting
+            last_submission_time = Dreams.objects.filter(ip_address=ip_address).latest('submission_time').submission_time
+            current_time = timezone.now()
+            time_difference = current_time - last_submission_time
+            wait_time = timedelta(days=1) - time_difference
+
+            messages.error(request, f"You have already submitted the form. Please wait {wait_time} before resubmitting.")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        dream_form = DreamForm(request.POST)
         if dream_form.is_valid() and not recent_submission:
             dream_post = dream_form.save(commit=False)
-            
             dream_post.ip_address = ip_address
             sender = dream_post.email 
-        
             dream_post.save()
-            '''
+
             from_email = 'dreamanalytica@outlook.com'
             to_email = 'dreamanalytica08@gmail.com'
             
@@ -62,8 +71,8 @@ def index(request):
                 to=[to_email, sender],
             )
             email.attach_alternative(html_message, "text/html")
-            email.send(fail_silently=False)
-            '''
+            email.send(fail_silently=True)
+            
             '''
             pub_str = dream_post.pub.strftime('%Y-%m-%d %H:%M:%S') if dream_post.pub else None
 
@@ -90,12 +99,12 @@ def index(request):
             # Store the JSON data in Firebase storage
             storage.child("dreams").child(f"{dream_post.id}.json").put(file_path)
             '''
+            
             return HttpResponseRedirect("dreams")
         else:
-            print("Form is not valid or recent submission exists")  
-            print("Form errors:", dream_form.errors)
-            print("Submitted data:", request.POST)
-
+            messages.error(request, "Invalid form data. Please check the entered information.")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
     else:
         dream_form = DreamForm()
 
@@ -104,8 +113,7 @@ def index(request):
     return render(request, "dreamapp/index.html", context={"dreams": dreams,
                                                              "dream_form": dream_form,
                                                              "recent_submission": recent_submission,
-                                                             "mbti_choices": mbti_choices,})
-   
+                                                             "mbti_choices": mbti_choices})
 
 def dreams(request):
     all_json_data = []
@@ -150,6 +158,8 @@ def dreams(request):
         "all_json_data": all_json_data,
     })
 
+def error(request):
+    return render(request, "dreamapp/error.html")
 
     '''
     if dreams.exists():
