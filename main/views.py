@@ -115,6 +115,105 @@ def index(request):
                                                              "recent_submission": recent_submission,
                                                              "mbti_choices": mbti_choices})
 
+
+
+def consult(request):
+    dreams = Dreams.objects.all()
+    recent_submission = False
+    #json_data = None
+        
+    if request.method == "POST":
+        ip_address = request.META.get('REMOTE_ADDR')
+        #recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(days=1)).exists()
+
+        recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(seconds=1)).exists()
+        
+        if recent_submission:
+            # Calculate the remaining wait time before resubmitting
+            last_submission_time = Dreams.objects.filter(ip_address=ip_address).latest('submission_time').submission_time
+            current_time = timezone.now()
+            time_difference = current_time - last_submission_time
+            wait_time = timedelta(days=1) - time_difference
+
+            messages.error(request, f"You have already submitted the form. Please wait {wait_time} before resubmitting.")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        dream_form = DreamForm(request.POST)
+        if dream_form.is_valid() and not recent_submission:
+            dream_post = dream_form.save(commit=False)
+            dream_post.ip_address = ip_address
+            sender = dream_post.email 
+            dream_post.save()
+
+            from_email = 'dreamanalytica@outlook.com'
+            to_email = 'dreamanalytica08@gmail.com'
+            
+            subject = "New Dream Submission"
+            context = {
+                "name": dream_post.name,
+                "mbti_type": dream_post.mbti_type,
+                "email": dream_post.email,
+                "phone": dream_post.phone,
+                "title": dream_post.title,
+                "dream": dream_post.dream,
+                "pub": dream_post.pub, 
+            }
+
+            html_message = render_to_string("dreamapp/email_templates/dream_submission.html", context)
+            plain_message = strip_tags(html_message)
+            # Send the email
+            email = EmailMultiAlternatives(
+                subject=subject,
+                body=plain_message,
+                from_email=from_email,
+                to=[to_email, sender],
+            )
+            email.attach_alternative(html_message, "text/html")
+            email.send(fail_silently=True)
+            
+            '''
+            pub_str = dream_post.pub.strftime('%Y-%m-%d %H:%M:%S') if dream_post.pub else None
+
+            dream_data = {
+                'id': str(dream_post.id),
+                'ip_address': dream_post.ip_address,
+                'submission_time': dream_post.submission_time.strftime('%Y-%m-%d %H:%M:%S'),
+                'name': dream_post.name,
+                'mbti_type': dream_post.mbti_type,
+                'email': dream_post.email,
+                'phone': str(dream_post.phone),
+                'title': dream_post.title,
+                'dream': dream_post.dream,
+                'active': dream_post.active,
+                'pub': pub_str,
+            }
+            
+            json_data = json.dumps(dream_data)
+
+            file_path = os.path.join(os.getcwd(), f"{dream_post.id}.json")
+
+            with open(file_path, 'w') as file:
+                file.write(json_data)
+            # Store the JSON data in Firebase storage
+            storage.child("dreams").child(f"{dream_post.id}.json").put(file_path)
+            '''
+            
+            return HttpResponseRedirect("dreams")
+        else:
+            messages.error(request, "Invalid form data. Please check the entered information.")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+    else:
+        dream_form = DreamForm()
+
+    mbti_choices = DreamForm.MBTI_CHOICES
+    return render(request, "dreamapp/consult.html", context={"dreams": dreams,
+                                                             "dream_form": dream_form,
+                                                             "recent_submission": recent_submission,
+                                                             "mbti_choices": mbti_choices})
+
+
+
 def dreams(request):
     all_json_data = []
     dreams_with_replies = []

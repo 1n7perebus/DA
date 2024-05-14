@@ -7,8 +7,6 @@ class DreamsAdmin(admin.ModelAdmin):
     list_display = ('email','id', 'phone', 'name','pub')
     ordering =['-pub','email']
 
-
-
 class ReplyAdmin(admin.ModelAdmin):
     
     list_display = ('name','id' ,'pub')
