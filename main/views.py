@@ -257,6 +257,13 @@ def dreams(request):
         "all_json_data": all_json_data,
     })
 
+
+def analyticalPsychology(request):
+    return render(request, "dreamapp/analyticalPsychology.html")
+
+def typology(request):
+    return render(request, "dreamapp/typology.html")
+
 def error(request):
     return render(request, "dreamapp/error.html")
 
