@@ -124,9 +124,9 @@ def consult(request):
         
     if request.method == "POST":
         ip_address = request.META.get('REMOTE_ADDR')
-        #recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(days=1)).exists()
+        recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(days=1)).exists()
 
-        recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(seconds=1)).exists()
+        #recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(seconds=1)).exists()
         
         if recent_submission:
             # Calculate the remaining wait time before resubmitting
@@ -260,6 +260,13 @@ def dreams(request):
 
 def analyticalPsychology(request):
     return render(request, "dreamapp/analyticalPsychology.html")
+
+def anima(request):
+    return render(request, "dreamapp/anima.html")
+
+def animus(request):
+    return render(request, "dreamapp/animus.html")
+
 
 def typology(request):
     return render(request, "dreamapp/typology.html")
