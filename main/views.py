@@ -8,6 +8,7 @@ from django.utils.html import strip_tags
 from datetime import timedelta
 from django.utils import timezone
 from django.contrib import messages
+from django.urls import reverse
 
 from django.db.models import *
 from .forms import *
@@ -198,7 +199,7 @@ def consult(request):
             storage.child("dreams").child(f"{dream_post.id}.json").put(file_path)
             '''
             
-            return HttpResponseRedirect("dreams")
+            return HttpResponseRedirect(reverse('main:dreams'))
         else:
             messages.error(request, "Invalid form data. Please check the entered information.")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
