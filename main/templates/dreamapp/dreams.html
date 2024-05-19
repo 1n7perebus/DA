@@ -46,6 +46,7 @@
   </script>
   <div class="container" style="margin-top: 5em; margin-bottom: 5em;">
     {% for item in dreams_with_replies %}
+    {% if item.dream.active == True %}
     <div class="flow-text container">
       <div class="card horizontal">
         <div class="card-stacked">
@@ -81,6 +82,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
     {% endfor %}
   </div>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5864886611650170"
