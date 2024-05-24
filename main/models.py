@@ -33,7 +33,7 @@ class Dreams(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     ip_address = models.CharField(max_length=45, default="")
-    submission_time = models.DateTimeField(default=datetime.now)
+    submission_time = models.DateTimeField(default=timezone.now)
 
     name = models.CharField(max_length=50, default="")
     email = models.EmailField(max_length=200, default="")
@@ -42,7 +42,7 @@ class Dreams(models.Model):
     mbti_type = models.CharField(max_length=4, choices=MBTI_CHOICES, default='')
     #child = models.ForeignKey('self', related_name='reps', blank=True, null=True, on_delete=models.CASCADE)
 
-    pub = models.DateTimeField("date published", default=datetime.now)
+    pub = models.DateTimeField("date published", default=timezone.now)
     title = models.CharField(max_length=44)
     dream = models.TextField(default="")
     viewobj = models.IntegerField(default=0)
