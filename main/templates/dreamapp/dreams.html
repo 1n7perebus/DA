@@ -54,7 +54,8 @@
             <span class="card-title exo-200 flow-text"><strong>{{ item.dream.title }}</strong></span>
             <p class="exo-200t flow-text"><strong>Name:</strong> {{ item.dream.name }}</p>
             <p class="exo-200t flow-text"><strong>MBTI Type:</strong> {{ item.dream.mbti_type }}</p>
-            <p class="exo-200t flow-text"><strong>Dream:</strong> {{ item.dream.dream }}</p>
+            <p class="exo-200t flow-text"><strong>Dream:</strong></p>
+            <p class="dream-text exo-200t flow-text">{{ item.dream.dream }}</p>
             <p class="exo-200d flow-text">{{ item.dream.pub }}</p>
             <div class="" style="border-top: 1px solid rgba(160, 160, 160, 0.2);margin:1em 0 1em 0"></div>
             <p class="exo-200 flow-text"><strong>Replies:</strong></p>
@@ -93,6 +94,11 @@
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
+  <style>
+    .dream-text {
+      white-space: pre-wrap;
+    }
+  </style>
   <!--
   <script>
     var all_json_data = {{all_json_data | safe}};
