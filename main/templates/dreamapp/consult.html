@@ -26,14 +26,10 @@
 <body style="margin-bottom:10em;padding-top:3em;">
     <div class="container" style="margin-top:10em">
         <div class="container">
-            <div class="container">
-                <h4 class="exo-200h mobile-exo200h">
-                    Book A Session
-                </h4>
-            </div>
             <form class="container scale-form" method="POST">
+                <h4 class="exo-200h center flow-text" style="padding-bottom:1em">Book A Consultation Or Just Share Your Dream To The Wall</h4>
                 {% csrf_token %}
-                <div class="row ">
+                <div class="row">
                     <div class="input-field col s6 exo-200">
                         <input id="email" name="email" type="email" class="mobile-exo200 validate exo-200" required>
                         <label class="exo-200" for="email">Email*</label>
@@ -91,9 +87,7 @@
                     <b class="center mobile-exo200">[ SUBMIT ]</b>
                 </button>
             </form>
-            <p class="exo-200 flow-text"> 
-                
-            </p>
+            
         </div>
     </div>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5864886611650170"
