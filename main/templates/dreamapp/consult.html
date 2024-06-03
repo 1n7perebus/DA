@@ -21,10 +21,6 @@
             }
         }
 
-        select {
-            display: block;
-        }
-
     </style>
 </head>
 
@@ -32,7 +28,8 @@
     <div class="container" style="margin-top:10em">
         <div class="container">
             <form class="container scale-form" method="POST">
-                <h4 class="exo-200h center flow-text" style="padding-bottom:1em">Book A Consultation Or Just Share Your Dream To The Wall</h4>
+                <h4 class="exo-200h center flow-text" style="padding-bottom:1em">Book A Consultation Or Just Share Your
+                    Dream To The Wall</h4>
                 {% csrf_token %}
                 <div class="row">
                     <div class="input-field col s6 exo-200">
@@ -72,12 +69,12 @@
                 <div class="row">
                     <div class="input-field col s6 exo-200">
                         <label>
-                            <input type="checkbox" name="active"/>
+                            <input type="checkbox" name="active" />
                             <span class="exo-200">Share dream publicly*</span>
                         </label>
                     </div>
-                    <div class="input-field col s6 exo-200" required>
-                        <select name="mbti_type" id="mbti_type" style="color:white;">
+                    <div class="input-field col s6 exo-200" style="position: relative; z-index: 10;" required>
+                        <select name="mbti_type" id="mbti_type" style="color:white;z-index: 1;">
                             <option class="mobile-exo200" style="font-size: 11px;">Select Your Personality Type*
                             </option>
                             {% for mbti_choice in mbti_choices %}
@@ -88,11 +85,11 @@
                     </div>
                 </div>
                 <button class="btn btn-small center hoverable exo-200" type="submit"
-                    style="width:100%;margin-top:0.5rem">
+                    style="width:100%;margin-top:0.5rem;z-index: 10;">
                     <b class="center mobile-exo200">[ SUBMIT ]</b>
                 </button>
             </form>
-            
+
         </div>
     </div>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5864886611650170"
@@ -104,7 +101,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('select');
             M.FormSelect.init(elems);
         });

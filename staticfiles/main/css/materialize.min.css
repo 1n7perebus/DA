@@ -6816,13 +6816,14 @@ select.browser-default {
 }
 
 select {
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: white;
 	width: 100%;
 	padding: 5px;
 	border: 1px solid #f2f2f2;
 	border-radius: 2px;
 	height: 3rem;
-	color: white
+	color: #444444;
+	z-index: 1;
 }
 
 .select-label {
@@ -6831,6 +6832,7 @@ select {
 
 .select-wrapper {
 	position: relative;
+	z-index: 10;
 }
 
 .select-wrapper.valid+label, .select-wrapper.invalid+label {
@@ -6860,7 +6862,7 @@ select {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	z-index: 1
+	z-index: 20
 }
 
 .select-wrapper input.select-dropdown:focus {
@@ -6944,22 +6946,30 @@ body.keyboard-focused .select-dropdown.dropdown-content li:focus {
 }
 
 .select-dropdown li.optgroup {
-	border-top: 1px solid #eee
+	border-top: 1px solid #eee;
+	z-index: 1000 !important;
 }
 
 .select-dropdown li.optgroup.selected>span {
 	color: rgba(0, 0, 0, 0.7);
+	z-index: 1000 !important;
 	
 }
 
 .select-dropdown li.optgroup>span {
 	color: rgba(0, 0, 0, 0.4);
-	
+	z-index: 1000 !important;
 }
 
 .select-dropdown li.optgroup~li.optgroup-option {
 	padding-left: 1rem;
+	z-index: 1000 !important;
 	
+}
+
+.select-dropdown-content {
+    z-index: 1000 !important;
+    position: absolute;
 }
 
 .file-field {
