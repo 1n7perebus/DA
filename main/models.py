@@ -28,8 +28,6 @@ class Dreams(models.Model):
         ('ESTP', 'ESTP'),
         ('ESFP', 'ESFP'),
     ]
-
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     ip_address = models.CharField(max_length=45, default="")
@@ -67,5 +65,28 @@ class Reply(models.Model):
 
     def __str__(self):
         return str(self.dream.id)
+    
+
+
+class Share(models.Model):
+    search_fields = ['email', 'title', 'pub', 'dream','id']
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    ip_address = models.CharField(max_length=45, default="")
+    submission_time = models.DateTimeField(default=timezone.now)
+    user = models.CharField(max_length=50, default="")
+    pub = models.DateTimeField("date published", default=timezone.now)
+    title = models.CharField(max_length=44)
+    dream = models.TextField(default="")
+
+    class Meta:
+        verbose_name = "share"
+        ordering = ['-pub']
+
+    def __str__(self):
+        return f"Submission from {self.ip_address} at {self.submission_time}"
+    
+    def __str__(self):
+        return str(self.user)
     
     

@@ -30,7 +30,7 @@
 
 .exo-200 {
 	font-family: 'Exo 2', sans-serif;
-	font-weight: 600;
+	font-weight: 400;
 	font-size: 16px;
 	background: none;
 	color: #4b4b4b;
@@ -51,26 +51,25 @@
 
 .exo-200d {
 	font-family: 'Exo 2', sans-serif;
-	font-weight: 300;
-	font-size: 12px;
+	font-weight: 600;
+	font-size: 16px;
 	letter-spacing: 1px;
 	transform:scaleY(95%);
 	background: none;
 	color: #4b4b4b;
 	text-transform: uppercase;
+	line-height: 2em;
 }
 
 .exo-300t {
 	font-family: 'Exo 2', sans-serif;
-	font-weight: 300;
-	font-size: 13px;
+	font-weight: 400;
+	font-size: 18px;
 	background: none;
+	color: #4b4b4b;
 	letter-spacing:1px;
 	transform:scaleY(95%);
-	color: #4b4b4b;
-	text-shadow: 0 0 2px #d3d3d3;
-	text-transform: uppercase;
-
+	line-height: 1.2em;
 }
 
 .exo-200s {

@@ -45,3 +45,11 @@ class ReplyForm(forms.ModelForm):
         fields = ['reply']
 
 
+class ShareForm(forms.ModelForm):
+    user = forms.CharField(required=True, label="Name")
+    title = forms.CharField(required=True, label="Title")
+    dream = forms.CharField(required=True)
+
+    class Meta:
+        model = Share
+        fields = ['user', 'title', 'dream']

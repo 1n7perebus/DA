@@ -97,17 +97,37 @@ def consult(request):
 
 
 def dreams(request):
-    all_json_data = []
     dreams_with_replies = []
     dreams = Dreams.objects.all()
-    for dream in dreams:
-        replies = Reply.objects.filter(dream=dream)
-        dreams_with_replies.append({'dream': dream, 'replies': replies})
-
+    share = Share.objects.all()
+    share_form = ShareForm()
+    reply_form = ReplyForm()
 
     if request.method == 'POST':
+        ip_address = request.META.get('REMOTE_ADDR')
+        share_form = ShareForm(request.POST)
         reply_form = ReplyForm(request.POST)
-        if reply_form.is_valid():
+
+        recent_submission = Share.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(seconds=1)).exists()
+
+        if recent_submission:
+            # Calculate the remaining wait time before resubmitting
+            last_submission_time = Share.objects.filter(ip_address=ip_address).latest('submission_time').submission_time
+            current_time = timezone.now()
+            time_difference = current_time - last_submission_time
+            wait_time = timedelta(days=1) - time_difference
+
+            messages.error(request, f"You have already submitted the form. Please wait {wait_time} before resubmitting.")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        if share_form.is_valid() and not recent_submission:
+            share_post = share_form.save(commit=False)
+            share_post.ip_address = ip_address
+            share_post.save()
+
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        elif reply_form.is_valid():
             try:
                 dream_id = request.POST.get('dream_id')
                 dream_instance = get_object_or_404(Dreams, id=dream_id)
@@ -128,17 +148,21 @@ def dreams(request):
                 print("Reply saved successfully!")  
 
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.error(request, "Invalid form data. Please check the entered information.")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-    else:
-        reply_form = ReplyForm()
+    for dream in dreams:
+        replies = Reply.objects.filter(dream=dream)
+        dreams_with_replies.append({'dream': dream, 'replies': replies})
 
     return render(request, "dreamapp/dreams.html", context={
         "dreams_with_replies": dreams_with_replies,
         "dreams": dreams,
         "reply_form": reply_form,
-        "all_json_data": all_json_data,
+        "share": share,
+        "share_form": share_form,
     })
-
 
 def analyticalPsychology(request):
     return render(request, "dreamapp/analyticalPsychology.html")
