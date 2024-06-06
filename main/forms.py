@@ -26,7 +26,7 @@ class DreamForm(forms.ModelForm):
 
     email = forms.EmailField(required=True, label="Email")
     name = forms.CharField(required=True, label="Name")
-    phone = PhoneNumberField(required=False, label="Phone Number")
+    #phone = PhoneNumberField(required=False, label="Phone Number")
     title = forms.CharField(required=True, label="Title")
     dream = forms.CharField(required=True)
     active = forms.BooleanField(required=False)
@@ -35,7 +35,7 @@ class DreamForm(forms.ModelForm):
 
     class Meta:
         model = Dreams
-        fields = ['email', 'name', 'phone', 'title', 'dream', 'active', 'mbti_type']
+        fields = ['email', 'name', 'title', 'dream', 'active', 'mbti_type']
 
 
 class ReplyForm(forms.ModelForm):

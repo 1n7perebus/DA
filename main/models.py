@@ -35,7 +35,7 @@ class Dreams(models.Model):
 
     name = models.CharField(max_length=50, default="")
     email = models.EmailField(max_length=200, default="")
-    phone = PhoneNumberField(default="+10000000000")
+    #phone = PhoneNumberField(default="+10000000000")
 
     mbti_type = models.CharField(max_length=4, choices=MBTI_CHOICES, default='')
     #child = models.ForeignKey('self', related_name='reps', blank=True, null=True, on_delete=models.CASCADE)

@@ -22,13 +22,14 @@
     {% for item in dreams_with_replies %}
     {% if item.dream.active == True %}
     <div class="flow-text">
-      <div class="card horizontal"  style="border:1px solid #4accb2;border-radius:20px;padding:0.1rem 0 0.1rem 0">
+      <div class="card horizontal"  style="border:1px solid #4accb2;border-radius:20px">
         <div class="card-stacked">
           <div class="card-content">
             <p class="exo-200t flow-text">[ {{ item.dream.mbti_type }} ]{{ item.dream.name }}</p>
             <p class="Exo-200t flow-text">{{ item.dream.title }}</p>
             <p class="dream-text exo-300t flow-text">{{ item.dream.dream }}</p>
             <p class="exo-200d">{{ item.dream.pub }}</p>
+            <!--
             <div class="" style="border-top: 1px solid rgba(160, 160, 160, 0.2);margin:1em 0 1em 0"></div>
             <p class="exo-200 flow-text">Analysis:</p>
             {% for reply in item.replies %}
@@ -36,6 +37,7 @@
             {% empty %}
             <p class="exo-200 flow-text"></p>
             {% endfor %}
+            -->
             {% if request.user.is_authenticated %}
             <form method="POST" action="">
               {% csrf_token %}

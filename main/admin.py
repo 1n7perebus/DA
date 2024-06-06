@@ -4,7 +4,7 @@ from .models import *
 
 class DreamsAdmin(admin.ModelAdmin):
     search_fields= ['email','pub']
-    list_display = ('email','id', 'phone', 'name','pub')
+    list_display = ('email','id', 'name','pub')
     ordering =['-pub','email']
 
 class ReplyAdmin(admin.ModelAdmin):
