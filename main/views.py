@@ -108,7 +108,7 @@ def dreams(request):
         share_form = ShareForm(request.POST)
         reply_form = ReplyForm(request.POST)
 
-        recent_submission = Share.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(seconds=1)).exists()
+        recent_submission = Share.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(days=1)).exists()
 
         if recent_submission:
             # Calculate the remaining wait time before resubmitting
@@ -129,8 +129,8 @@ def dreams(request):
 
         elif reply_form.is_valid():
             try:
-                dream_id = request.POST.get('dream_id')
-                dream_instance = get_object_or_404(Dreams, id=dream_id)
+                dream_email = request.POST.get('dream_email')
+                dream_instance = get_object_or_404(Dreams, email=dream_email)
                 print(f"Dream Instance: {dream_instance}")  
             except Exception as e:
                 print(f"Error retrieving Dream: {e}")  
