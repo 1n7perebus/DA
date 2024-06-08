@@ -9,7 +9,7 @@ class DreamsAdmin(admin.ModelAdmin):
 
 class ReplyAdmin(admin.ModelAdmin):
     
-    list_display = ('name','id' ,'pub')
+    list_display = ('dream','id','pub')
     ordering =['-pub']
 
 class ShareAdmin(admin.ModelAdmin):
