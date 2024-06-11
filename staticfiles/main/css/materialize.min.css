@@ -63,13 +63,13 @@
 
 .exo-300t {
 	font-family: 'Exo 2', sans-serif;
-	font-weight: 400;
+	font-weight: 300;
 	font-size: 18px;
 	background: none;
-	color: #4b4b4b;
+	color: #181818;
 	letter-spacing:1px;
 	transform:scaleY(95%);
-	line-height: 1.2em;
+	line-height: 1.5em;
 }
 
 .exo-200s {
@@ -4641,133 +4641,133 @@ small {
 
 @media only screen and (min-width: 360px) {
 	.flow-text {
-		font-size: 1.2rem
+		font-size: 1.1rem
 	}
 }
 
 @media only screen and (min-width: 390px) {
 	.flow-text {
-		font-size: 1.224rem
+		font-size: 1.124rem
 	}
 }
 
 @media only screen and (min-width: 420px) {
 	.flow-text {
-		font-size: 1.248rem
+		font-size: 1.148rem
 	}
 }
 
 @media only screen and (min-width: 450px) {
 	.flow-text {
-		font-size: 1.272rem
+		font-size: 1.172rem
 	}
 }
 
 @media only screen and (min-width: 480px) {
 	.flow-text {
-		font-size: 1.296rem
+		font-size: 1.196rem
 	}
 }
 
 @media only screen and (min-width: 510px) {
 	.flow-text {
-		font-size: 1.32rem
+		font-size: 1.22rem
 	}
 }
 
 @media only screen and (min-width: 540px) {
 	.flow-text {
-		font-size: 1.344rem
+		font-size: 1.244rem
 	}
 }
 
 @media only screen and (min-width: 570px) {
 	.flow-text {
-		font-size: 1.368rem
+		font-size: 1.268rem
 	}
 }
 
 @media only screen and (min-width: 600px) {
 	.flow-text {
-		font-size: 1.392rem
+		font-size: 1.292rem
 	}
 }
 
 @media only screen and (min-width: 630px) {
 	.flow-text {
-		font-size: 1.416rem
+		font-size: 1.316rem
 	}
 }
 
 @media only screen and (min-width: 660px) {
 	.flow-text {
-		font-size: 1.44rem
+		font-size: 1.34rem
 	}
 }
 
 @media only screen and (min-width: 690px) {
 	.flow-text {
-		font-size: 1.464rem
+		font-size: 1.364rem
 	}
 }
 
 @media only screen and (min-width: 720px) {
 	.flow-text {
-		font-size: 1.488rem
+		font-size: 1.388rem
 	}
 }
 
 @media only screen and (min-width: 750px) {
 	.flow-text {
-		font-size: 1.512rem
+		font-size: 1.412rem
 	}
 }
 
 @media only screen and (min-width: 780px) {
 	.flow-text {
-		font-size: 1.536rem
+		font-size: 1.436rem
 	}
 }
 
 @media only screen and (min-width: 810px) {
 	.flow-text {
-		font-size: 1.56rem
+		font-size: 1.46rem
 	}
 }
 
 @media only screen and (min-width: 840px) {
 	.flow-text {
-		font-size: 1.284rem
+		font-size: 1.184rem
 	}
 }
 
 @media only screen and (min-width: 870px) and (max-width: 900px) {
 	.flow-text {
-		font-size: 1.408rem
+		font-size: 1.308rem
 	}
 }
 
 @media only screen and (min-width: 900px) and (max-width: 960px){
 	.flow-text {
-		font-size: 1.432rem
+		font-size: 1.332rem
 	}
 }
 
 @media only screen and (min-width: 960px) and (max-width: 960px){
 	.flow-text {
-		font-size: 1.456rem
+		font-size: 1.356rem
 	}
 }
 
 @media only screen and (min-width: 960px) and (max-width: 992px){
 	.flow-text {
-		font-size: 1.4rem
+		font-size: 1.3rem
 	}
 }
 
 @media only screen and (max-width: 360px) {
 	.flow-text {
-		font-size: 1.1rem
+		font-size: 1.0rem
 	}
 }
 
