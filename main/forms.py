@@ -31,11 +31,17 @@ class DreamForm(forms.ModelForm):
     dream = forms.CharField(required=True)
     active = forms.BooleanField(required=False)
     mbti_type = forms.ChoiceField(choices=MBTI_CHOICES, label="MBTI Type")
+    scale = forms.ChoiceField(
+        choices=[(i, str(i)) for i in range(1, 8)], 
+        label="Dream Scale", 
+        initial=4, 
+        widget=forms.RadioSelect
+    )
 
 
     class Meta:
         model = Dreams
-        fields = ['email', 'name', 'title', 'dream', 'active', 'mbti_type']
+        fields = ['email', 'name', 'title', 'dream', 'active', 'mbti_type','scale']
 
 
 class ReplyForm(forms.ModelForm):

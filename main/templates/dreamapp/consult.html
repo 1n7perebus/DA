@@ -22,6 +22,7 @@
         }
 
     </style>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -83,6 +84,23 @@
                         </select>
                         <label class="exo-200" for="mbti_type">Personality Type*</label>
                     </div>
+                    <div class="row">
+                        <div class="input-field col s12 exo-200">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: flex;">
+                                {% for choice in dream_form.scale %}
+                                    <label class="btn btn-secondary" style="margin-right: 5px;">
+                                        {{ choice.tag }}
+                                        <span></span>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col s12">
+                            <a class="exo-200t left">NIGHTMARE</a>
+                            <a class="exo-200t right">SWEET DREAM</a>
+                        </div>
+                    </div>
+                    
                     <p class="exo-200">If you don't know your personality type, head to <a class="exo-200 highlight-blue" style="text-decoration: underline;" href="https://www.16personalities.com/free-personality-test">www.16personalities.com</a> and take the free test to find out!</p>
                 </div>
                 <button class="btn btn-small center hoverable exo-200" type="submit"
@@ -115,6 +133,7 @@
             charCountSpan.textContent = remainingChars;
         }
     </script>
+   
 </body>
 
 {% endblock %}
