@@ -61,9 +61,9 @@ def consult(request):
                 "name": dream_post.name,
                 "mbti_type": dream_post.mbti_type,
                 "email": dream_post.email,
-                "phone": dream_post.phone,
                 "title": dream_post.title,
                 "dream": dream_post.dream,
+                "scale": dream_post.scale,
                 "pub": dream_post.pub, 
             }
 
@@ -99,19 +99,32 @@ def consult(request):
 def dreams(request):
     dreams_with_replies = []
     dreams = Dreams.objects.all()
-    share = Share.objects.all()
-    share_form = ShareForm()
     reply_form = ReplyForm()
+
+    average_scale = dreams.aggregate(Avg('scale'))['scale__avg']
+
+    if average_scale is not None:
+        if average_scale > 6:
+            health_status = "healthy"
+            health_color = "teal-green"
+        elif average_scale < 4:
+            health_status = "unhealthy"
+            health_color = "maroon-red"
+        else:
+            health_status = "neutral"
+            health_color = "neutral-color"
+    else:
+        health_status = "No data available"
+        health_color = "neutral-color"
 
     if request.method == 'POST':
         ip_address = request.META.get('REMOTE_ADDR')
-        share_form = ShareForm(request.POST)
         reply_form = ReplyForm(request.POST)
 
+        # Check if the user has submitted a reply in the last 24 hours
         recent_submission = Share.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(days=1)).exists()
 
         if recent_submission:
-            # Calculate the remaining wait time before resubmitting
             last_submission_time = Share.objects.filter(ip_address=ip_address).latest('submission_time').submission_time
             current_time = timezone.now()
             time_difference = current_time - last_submission_time
@@ -120,34 +133,30 @@ def dreams(request):
             messages.error(request, f"You have already submitted the form. Please wait {wait_time} before resubmitting.")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-        if share_form.is_valid() and not recent_submission:
-            share_post = share_form.save(commit=False)
-            share_post.ip_address = ip_address
-            share_post.save()
-
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
         elif reply_form.is_valid():
+            dream_email = request.POST.get('dream_email')
             try:
-                dream_email = request.POST.get('dream_email')
                 dream_instance = get_object_or_404(Dreams, email=dream_email)
-                print(f"Dream Instance: {dream_instance}")  
-            except Exception as e:
-                print(f"Error retrieving Dream: {e}")  
-                dream_instance = None
-
-            if dream_instance:
-                print("Saving Reply...") 
-
                 reply = reply_form.save(commit=False)
                 reply.dream = dream_instance
                 reply.reply = request.POST.get('reply')
                 reply.pub = timezone.now()
                 reply.save()
 
+                # Log success
                 print("Reply saved successfully!")  
 
+                # Record the submission
+                Share.objects.create(ip_address=ip_address, submission_time=timezone.now())
+
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            except Dreams.DoesNotExist:
+                messages.error(request, "Dream not found. Please check the email address.")
+            except Exception as e:
+                print(f"Error: {e}")
+                messages.error(request, "An error occurred. Please try again later.")
+            
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             messages.error(request, "Invalid form data. Please check the entered information.")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -156,12 +165,13 @@ def dreams(request):
         replies = Reply.objects.filter(dream=dream)
         dreams_with_replies.append({'dream': dream, 'replies': replies})
 
-    return render(request, "dreamapp/dreams.html", context={
+    return render(request, "dreamapp/dreams.html", {
         "dreams_with_replies": dreams_with_replies,
         "dreams": dreams,
         "reply_form": reply_form,
-        "share": share,
-        "share_form": share_form,
+        "average_scale": average_scale,
+        "health_status": health_status,
+        "health_color": health_color,
     })
 
 def analyticalPsychology(request):

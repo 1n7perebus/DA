@@ -5,7 +5,6 @@ from django.db import models
 from django.utils import timezone
 from datetime import datetime
 from phonenumber_field.modelfields import PhoneNumberField
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Dreams(models.Model):
@@ -45,7 +44,7 @@ class Dreams(models.Model):
     pub = models.DateTimeField("date published", default=timezone.now)
     title = models.CharField(max_length=44)
     dream = models.TextField(default="")
-    scale = models.IntegerField(default=5, validators=[MinValueValidator(1), MaxValueValidator(10)])
+    scale = models.IntegerField(default=5)
     viewobj = models.IntegerField(default=0)
     timer = models.DateTimeField(blank=True,null=True)
     active = models.BooleanField(default=False)
