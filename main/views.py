@@ -34,16 +34,26 @@ def consult(request):
         ip_address = request.META.get('REMOTE_ADDR')
         #recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(days=1)).exists()
 
-        recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(seconds=1)).exists()
+        recent_submission = Dreams.objects.filter(ip_address=ip_address, submission_time__gte=timezone.now() - timedelta(days=1)).exists()
         
         if recent_submission:
-            # Calculate the remaining wait time before resubmitting
             last_submission_time = Dreams.objects.filter(ip_address=ip_address).latest('submission_time').submission_time
             current_time = timezone.now()
             time_difference = current_time - last_submission_time
-            wait_time = timedelta(days=1) - time_difference
+            wait_time_seconds = timedelta(days=1).total_seconds() - time_difference.total_seconds()
 
-            messages.error(request, f"You have already submitted the form. Please wait {wait_time} before resubmitting.")
+            hours, remainder = divmod(wait_time_seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+
+            wait_message = ""
+            if hours >= 1:
+                wait_message += f"{int(hours)} hour{'s' if int(hours) > 1 else ''}"
+            if minutes >= 1:
+                wait_message += f" {int(minutes)} minute{'s' if int(minutes) > 1 else ''}"
+            if seconds >= 1:
+                wait_message += f" {int(seconds)} second{'s' if int(seconds) > 1 else ''}"
+
+            messages.error(request, f"To prevent spamming, please wait {wait_message} before resubmitting.")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         dream_form = DreamForm(request.POST)
@@ -105,10 +115,10 @@ def dreams(request):
 
     if average_scale is not None:
         if average_scale > 3.5:
-            health_status = "healthy"
+            health_status = "balanced"
             health_color = "teal-green"
         elif average_scale < 2.5:
-            health_status = "unhealthy"
+            health_status = "unbalanced"
             health_color = "maroon-red"
         else:
             health_status = "neutral"
