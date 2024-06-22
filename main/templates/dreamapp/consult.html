@@ -84,11 +84,11 @@
                         </select>
                         <label class="exo-200" for="mbti_type">Personality Type*</label>
                     </div>
-                    <div class="row">
-                        <div class="input-field col s12 exo-200">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: flex;">
+                        <div class="conatiner">
+                        <div class="input-field exo-200 center" style="margin-top:2em">
+                            <div class="center" data-toggle="buttons" style="display: inline-flex;margin-top:1em">
                                 {% for choice in dream_form.fields.scale.choices %}
-                                <label class="btn btn-secondary" style="margin-right: 5px;">
+                                <label class="" style="margin-right: 5px;">
                                     <input type="radio" name="scale" value="{{ choice.0 }}"
                                         {% if dream_form.scale.value == choice.0 %}checked{% endif %}>
                                     {{ choice.1 }}
@@ -97,12 +97,12 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class="col s12">
-                            <a class="exo-200t left">NIGHTMARE</a>
-                            <a class="exo-200t right">SWEET DREAM</a>
+                        <div class="container">
+                            <a class="exo-200 left">BAD DREAM</a>
+                            <a class="exo-200 right">GOOD DREAM</a>
                         </div>
                     </div>
-
+                </br></br>
                     <p class="exo-200">If you don't know your personality type, head to <a
                             class="exo-200 highlight-blue" style="text-decoration: underline;"
                             href="https://www.16personalities.com/free-personality-test">www.16personalities.com</a> and

@@ -32,9 +32,9 @@ class DreamForm(forms.ModelForm):
     active = forms.BooleanField(required=False)
     mbti_type = forms.ChoiceField(choices=MBTI_CHOICES, label="MBTI Type")
     scale = forms.ChoiceField(
-    choices=[(i, str(i)) for i in range(1, 11)],  # Updated to 1-10 to match the model
+    choices=[(i, str(i)) for i in range(1, 6)],  # Updated to 1-10 to match the model
     label="Dream Scale", 
-    initial=5,  # Default scale to the middle value (5)
+    initial=3,  # Default scale to the middle value (5)
     widget=forms.RadioSelect,
     required=False
 )

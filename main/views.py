@@ -104,10 +104,10 @@ def dreams(request):
     average_scale = dreams.aggregate(Avg('scale'))['scale__avg']
 
     if average_scale is not None:
-        if average_scale > 6:
+        if average_scale > 3.5:
             health_status = "healthy"
             health_color = "teal-green"
-        elif average_scale < 4:
+        elif average_scale < 2.5:
             health_status = "unhealthy"
             health_color = "maroon-red"
         else:
